@@ -29,22 +29,33 @@ jQuery.ajax({
 
 
 $(document).ready(function() {
+    $('#categories').append(_categoryHTML({id: "1", name: "All", description: "All products"}));
 	$.getJSON('https://nit.tron.net.ua/api/category/list', function(data) {
 		data.forEach((category) => {
-			$('#categories').append(_categoryHTML(category));
+            $('#categories').append(_categoryHTML(category));
 		});
+        
     $('p.load').on('click', function() {
 			$(".product_item").html('');
 			$(".product_view").html('');
 			var id = this.id;
+        console.log(id);
+        if(id=="1All"){
+            $.getJSON('http://nit.tron.net.ua/api/product/list', function(data) {
+				data.forEach((product) => {
+					let $productHTML = _productHTML(product);
+					$('.product_item').append($productHTML);
+				});
+			});} else {
 			$.getJSON('http://nit.tron.net.ua/api/product/list/category/' + parseInt(id, 10), function(data) {
 				data.forEach((product) => {
 					console.log("in for");
 					let $productHTML = _productHTML(product);
 					$('.product_item').append($productHTML);
 				});
-			});
+			});}
 		});
+        
 	$('div.product_item').on('click', function() {
 			var name_ = $(this).attr('name');
 		});
