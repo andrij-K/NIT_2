@@ -7,7 +7,8 @@ window.$ = $;
 console.log('hi');
 console.log(`The time is ${new Date()}`);
 
-
+var cartArrID = [];
+var cartArrAmount = [];
 let _item = require('./modules/show_item');
 let _productHTML = require('./modules/product-html');
 let _categoryHTML = require('./modules/show-categoris');
@@ -96,8 +97,30 @@ $(document).on('click', '.showCart', function(){
   showCart();
 })
 
-var cartArrID = [];
-var cartArrAmount = [];
+
+$(document).on('click', '.removeFromCart', function(){
+  $("#orderForm").addClass("d-none");
+    var id = $(this).attr('data-id');
+  removeFromCart(id);
+  showCart();
+})
+
+function remove(array, element) {
+  const index = array.indexOf(element);
+  array.splice(index, 1);
+}
+
+function removeFromCart(id){
+  cartArrAmount[id] = 0;
+  cartArrID.remove(cartArrID,id);
+
+  Cookies.set('cartArrID', JSON.stringify(cartArrID));
+  Cookies.set('cartArrAmount', JSON.stringify(cartArrAmount));
+  showCart();
+}
+
+
+
 
 function addToCart(id){
   while(cartArrAmount.length <= id){
@@ -122,7 +145,7 @@ function showCart(){
     cartArrAmount=JSON.parse(Cookies.get('cartArrAmount'));
   }
 
-  var categoryName = "<p class=\"categoryName text-center font weight-bold\">Cart " + "<i class=\"material-icons align-middle\">shop</i>";
+  var categoryName = "<p class=\"categoryName text-center font weight-bold\">Cart " + "<i class=\"material-icons align-middle text-success\">shop</i>";
   $(".label-place").empty();
     $('.product_view').empty();
   $(".saveRow").empty();
@@ -130,7 +153,7 @@ function showCart(){
 
   $(".product_item").empty();
   if(cartArrID.length == 0){
-    $(".product_item").append( "<div class=\"container\"><div class=\"row products\"><div class=\"col\"><p class=\"text-center font-weight-bold\">Cart is empty</p></div></div></div>");
+    $(".product_item").append( "<div class=\"container\"><div class=\"row products\"><p class=\"text-center font-weight-bold\">Cart is empty</p></div></div>");
   }
   else{
     for(var i = 0; i < cartArrID.length; i++){
@@ -148,13 +171,13 @@ function showCart(){
                     "</div><div class=\"col-sm-7\"><p data_id=\"" 
                         + id + "\" class=\"productName font-weight-bold openStartProduct\">"
                         + content.name + "</p><div class=\"row\"><div class=\"col-auto\"><a class=\"font-weight-bold align-middle\">Amount: </a></div><div class=\"form-group col\"><input class=\"form-control example-number-input\" type=\"number\" id=\"saveAmountId"+id+"\" value=\""+ cartArrAmount[id] + "\"></div></div>"+
-                    "<a class=\"priceText font-weight-bold align-middle float-sm-right\">" + content.special_price + " &#8372</a></div><div class=\"float-right col\"><span data_id=\"" + id + "\" class=\"float-right removeFromCart\"><i class=\"material-icons align-middle\" style=\"font-size:30px;color:red\">cancel</i></span></div></div></div>";
+                    "<a class=\"priceText font-weight-bold align-middle float-sm-right\">" + content.special_price + " &#8372</a></div><div class=\"float-right col\"><span data_id=\"" + id + "\" class=\"float-right removeFromCart\"><i class=\"material-icons align-middle Delete\" style=\"font-size:30px;color:red\">cancel</i></span></div></div></div>";
                   }
                   else{
                     var cart1 = "<div class=\"container border cartObj\"><div class=\"row\"><div class=\"col-sm-4\">" +
                     "<img src=\"" + content.image_url +"\" data_id=\"" + id + "\" class=\"rounded mx-auto d-block cartImg openStartProduct\" style=\"max-width:200px;max-height:500px\" alt=\"Smiley face\">" +
                     "</div><div class=\"col-sm-7\"><p data_id=\"" + id + "\" class=\"productName font-weight-bold openStartProduct\">" + content.name + "</p><div class=\"row\"><div class=\"col-auto\"><a class=\"font-weight-bold align-middle\">Amount: </a></div><div class=\"form-group col\"><input class=\"form-control example-number-input\" type=\"number\" id=\"saveAmountId"+id+"\" value=\""+ cartArrAmount[id] + "\"></div></div>"+
-                    "<a class=\"priceText font-weight-bold align-middle float-sm-right\">" + content.price + " &#8372</a></div><div class=\"float-right col\"><span data_id=\"" + id + "\" class=\"float-right removeFromCart\"><i class=\"material-icons align-middle\" style=\"font-size:30px;color:red\">cancel</i></span></div></div></div>";
+                    "<a class=\"priceText font-weight-bold align-middle float-sm-right\">" + content.price + " &#8372</a></div><div class=\"float-right col\"><span data_id=\"" + id + "\" class=\"float-right removeFromCart\"><i class=\"material-icons align-middle Delete\" style=\"font-size:30px;color:red\">cancel</i></span></div></div></div>";
                   }
                   $(".product_item").append(cart1);
                 },

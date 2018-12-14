@@ -9,12 +9,12 @@ let _productHTML=({id, name, image_url, price, special_price})=>{
         
 		$card.append($(`<s class="mx-auto product-price">`).text(price));
 		
-         $card.append($(`<button type="button" class="btn button  product-buy  add_item"  data-id='${id}' data-title="${name}" data-img="${image_url}" data-price="${special_price}">`).text("В корзину"));
+         $card.append($(`<button type="button" class="btn btn-success button  product-buy  add_item"  data-id='${id}' data-title="${name}" data-img="${image_url}" data-price="${special_price}">`).text("В корзину"));
 	}else{
         $card.append($(`<span class="mx-auto product-price">`).text("Цена: " + price));
         
         
-         $card.append($(`<button type="button" class="btn button  product-buy  add_item"  data-id='${id}' data-title="${name}" data-img="${image_url}" data-price="${price}">`).text("В корзину"));
+         $card.append($(`<button type="button" class="btn btn-success button  product-buy  add_item"  data-id='${id}' data-title="${name}" data-img="${image_url}" data-price="${price}">`).text("В корзину"));
     }
     return $card;
 };
