@@ -14,7 +14,6 @@ let _categoryHTML = require('./modules/show-categoris');
 let _item_description = require('./modules/show_description');
 
 
-
 jQuery.ajax({
 	url: 'https://nit.tron.net.ua/api/product/list',
 	method: 'get',
@@ -26,6 +25,7 @@ jQuery.ajax({
 		alert("An error occured: " + xhr.status + " " + xhr.statusText);
 	},
 });
+
 
 
 $(document).ready(function() {
@@ -65,6 +65,8 @@ $(document).ready(function() {
 	});
    
   
+  
+    
     
     
 });
@@ -114,7 +116,7 @@ function addToCart(id){
 
 
 function showCart(){
-  window.location.hash = "cart";
+
   if(Cookies.get('cartArrID') != undefined){
     cartArrID=JSON.parse(Cookies.get('cartArrID'));
     cartArrAmount=JSON.parse(Cookies.get('cartArrAmount'));
@@ -128,7 +130,7 @@ function showCart(){
 
   $(".product_item").empty();
   if(cartArrID.length == 0){
-    $(".product_item").append( "<div class=\"container\"><div class=\"row products\"><div class=\"col\"><p class=\"text-center font-weight-bold\">Cart is empty</p></div></div></div>" + '<button type="button" class="btn btn-success btn-lg mx-auto saveBtn">Save changes</button>');
+    $(".product_item").append( "<div class=\"container\"><div class=\"row products\"><div class=\"col\"><p class=\"text-center font-weight-bold\">Cart is empty</p></div></div></div>");
   }
   else{
     for(var i = 0; i < cartArrID.length; i++){
@@ -164,7 +166,7 @@ function showCart(){
       }(i), 50);
     }
     $(".saveRow").remove();
-    $(".product_item").after( '<div class="row saveRow justify-content-center"><div class="col-auto"><button type="button" class="btn btn-success mx-auto btn-lg orderBtn">Order</button></div>');
+    $(".product_item").after( '<div class="row saveRow justify-content-center"><div class="col-auto"><button type="button" class="btn btn-primary mx-auto btn-lg orderBtn">Order</button></div>');
   }
 }
 
